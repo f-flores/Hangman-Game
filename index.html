@@ -23,7 +23,7 @@
       <section class="col-sm-5 offset-md-1">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Theme info</h5>
+            <h4 class="card-title">Theme info</h4>
             <p class="card-text">Did you know?...</p>
             <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
           </div>
@@ -32,9 +32,12 @@
       <section class="col-sm-5">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Game</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+            <h4 class="card-title">Game</h4>
+            <h5 class="card-text" id="introText"></h5>
+            <div id="hangmanWord"></div>
+            <div id="wrongGuessList"></div>
+            <div id="game"></div>
+            <button type="button" class="btn btn-primary game-btn" onmousedown="startNewGame()">Start Game</button>
           </div>
         </div>
       </section>

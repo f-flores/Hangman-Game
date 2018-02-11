@@ -15,6 +15,9 @@ body {
     font-family: "Rammetto One", cursive; }
   body .game-hdr-bg {
     background-color: #0E5923; }
+  body .game-btn {
+    color: #FFF9EC;
+    background-color: #0E5923; }
   body .lead {
     font-family: "Lobster", cursive;
     font-size: 180%;
