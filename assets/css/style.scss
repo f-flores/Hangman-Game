@@ -1,8 +1,54 @@
 /* stylesheet */
-$game-bg: red;
-$game-color: black;
+
+// game theme colors
+$game-theme-1a: #0E5923;
+$game-theme-1b: #8ED358;
+$game-theme-1c: #FFF9EC;
+$game-theme-1d: #F97D41;
+$game-theme-1e: #E9BB4F;
+
+// game fonts
+$game-headerfont-color: $game-theme-1b;
+$game-hdr-font: 'Rammetto One', cursive;
+$game-lead-font: 'Lobster', cursive;
+
+* {
+  box-sizing: border-box;
+}
 
 body {
-  background-color: $game-bg;
-  color: $game-color;
+  background-image: url("../images/intersection.png");
+  header {
+    color: $game-headerfont-color;
+    font-weight: bold;
+    img {
+      position: absolute;
+      top: 2%;
+      right: 10%;
+    }
+  }
+  h1 {
+    font-family: $game-hdr-font;
+  }
+  .game-hdr-bg {
+    background-color: $game-theme-1a;
+  }
+  .lead {
+    font-family: $game-lead-font;
+    font-size: 180%;
+    -ms-transform: rotateZ(-8deg); /* IE 9 */
+    -webkit-transform: rotateZ(-8deg); /* Safari 3-8 */
+    transform: rotateZ(-8deg);
+  }
+  .card .card-body {
+    background-color: $game-theme-1e;
+    .card-title {
+      background-color: $game-theme-1c;
+      height: 120%;
+    }
+  }
+  h5 {
+    height: 120%;
+  }
+
 }

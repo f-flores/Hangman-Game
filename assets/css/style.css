@@ -1,4 +1,32 @@
 /* stylesheet */
+* {
+  box-sizing: border-box; }
+
 body {
-  background-color: red;
-  color: black; }
+  background-image: url("../images/intersection.png"); }
+  body header {
+    color: #8ED358;
+    font-weight: bold; }
+    body header img {
+      position: absolute;
+      top: 2%;
+      right: 10%; }
+  body h1 {
+    font-family: "Rammetto One", cursive; }
+  body .game-hdr-bg {
+    background-color: #0E5923; }
+  body .lead {
+    font-family: "Lobster", cursive;
+    font-size: 180%;
+    -ms-transform: rotateZ(-8deg);
+    /* IE 9 */
+    -webkit-transform: rotateZ(-8deg);
+    /* Safari 3-8 */
+    transform: rotateZ(-8deg); }
+  body .card .card-body {
+    background-color: #E9BB4F; }
+    body .card .card-body .card-title {
+      background-color: #FFF9EC;
+      height: 120%; }
+  body h5 {
+    height: 120%; }
