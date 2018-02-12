@@ -15,6 +15,8 @@ const DEBUG = true;
 // VARIABLES and OBJECTS
 //
 
+var btn = document.querySelector("#startButton");
+
 // Hangman game object
 var hangman = {
   newGame: false,
@@ -124,6 +126,7 @@ function validAlphaChar(ch){
 // MAIN PROCEDURE
 //
 function startNewGame() {
+//btn.onclick = function() {
   if (DEBUG) { console.log("Begin Game"); console.log("Initialize object"); }
   initializeGame();
 
@@ -153,7 +156,7 @@ function startNewGame() {
       if (DEBUG) { console.log("VALID character"); }
       if (hangman.newGame === true) {
         hangman.htmlWrongSection = "<h5>Wrong Guesses:</h5>"
-        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection;
+        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numWrongGuesses.toString();;
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
@@ -166,8 +169,10 @@ function startNewGame() {
         //   if currentChar in hangmanWord
         if (hangman.isCharInWord() === true) {
           document.querySelector("#hangmanWord").innerHTML = hangman.currentWordGuess.join(" ");
-          if (hangman.currentWordGuess === hangman.currentHWord) {
-            if (DEBUG) {console.log("You won!");}
+          // currentWordGuess is an array of characters, currentHWord is a string....
+          // the join method is applied to currentWordGuess in order to convert to a string and correctly compare
+          if (hangman.currentWordGuess.join("") === hangman.currentHWord) {
+            if (DEBUG) {console.log(hangman.currentWordGuess + " " + hangman.currentHWord + " You won!");}
             hangman.totalWins++;
           }
         }
@@ -184,6 +189,7 @@ function startNewGame() {
           if (hangman.numWrongGuesses === MAX_GUESSES) {
             if (DEBUG) {console.log("You lose!");}
             hangman.totalLosses++;
+            //break;
           }
           hangman.htmlText = "<strong>" + hangman.currentGuess + "</strong>  ";
           document.querySelector("#wrongList").innerHTML += hangman.htmlText;
@@ -196,6 +202,7 @@ function startNewGame() {
   }
 }
 
+btn.onclick = startNewGame;
 // press Start button to begin game
 //sButton = document.getElementById("#startButton");
 //sButton.onmousedown =  startNewGame();
