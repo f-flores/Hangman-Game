@@ -28,6 +28,7 @@ var hangman = {
   htmlText: "",
   startHtml: "",
   htmlBlanks: "",
+  htmlWrongSection: "",
   HWordArray: [],
   currentWordGuess: [],
   //------------------------------------------------------------------------
@@ -91,7 +92,7 @@ function initializeGame() {
   hangman.totalLosses = 0;
   hangman.totalWins = 0;
   //wordBank: ["bat","baseball","inning"],
-  hangman.wrongGuesses = [];
+  hangman.wrongGuessesList = [];
   hangman.currentHWord = "";
   hangman.htmlText = "";
   hangman.startHtml = "";
@@ -151,7 +152,8 @@ function startNewGame() {
     if (validAlphaChar(hangman.currentGuess)) {
       if (DEBUG) { console.log("VALID character"); }
       if (hangman.newGame === true) {
-        document.querySelector("#wrongSection").innerHTML += "<h5>Wrong Guesses:</h5>";
+        hangman.htmlWrongSection = "<h5>Wrong Guesses:</h5>"
+        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection;
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
@@ -177,14 +179,15 @@ function startNewGame() {
         else {
           /* push wrong guess onto WrongList array */
           hangman.wrongGuessesList.push(hangman.currentGuess);
-          hangman.htmlText = "<strong>" + hangman.currentGuess + "</strong>  ";
-          document.querySelector("#wrongList").innerHTML += hangman.htmlText;
           hangman.numWrongGuesses++;
           if (DEBUG) {console.log("Wrong Guesses: " + hangman.numWrongGuesses);}
           if (hangman.numWrongGuesses === MAX_GUESSES) {
             if (DEBUG) {console.log("You lose!");}
             hangman.totalLosses++;
           }
+          hangman.htmlText = "<strong>" + hangman.currentGuess + "</strong>  ";
+          document.querySelector("#wrongList").innerHTML += hangman.htmlText;
+          document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection + hangman.numWrongGuesses.toString();
         }
       }
     } else {

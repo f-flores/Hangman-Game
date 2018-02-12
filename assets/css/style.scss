@@ -32,6 +32,8 @@ body {
   }
   h5 {
     height: 120%;
+    display: inline-block;
+    margin-right: 10px;
   }
   .game-hdr-bg {
     background-color: $game-theme-1a;
@@ -71,6 +73,14 @@ body {
     font-weight: bold;
     font-size: 300%;
     letter-spacing: 3px;
+  }
+  #wrongSection {
+    display: inline-block;
+    font-weight: bold;
+  }
+  #numWrong {
+    display: inline-block;
+    font-weight: bold;
   }
   #wrongList {
     margin-bottom: 2%;

@@ -14,7 +14,9 @@ body {
   body h1 {
     font-family: "Rammetto One", cursive; }
   body h5 {
-    height: 120%; }
+    height: 120%;
+    display: inline-block;
+    margin-right: 10px; }
   body .game-hdr-bg {
     background-color: #0E5923; }
   body .game-btn {
@@ -43,5 +45,11 @@ body {
     font-weight: bold;
     font-size: 300%;
     letter-spacing: 3px; }
+  body #wrongSection {
+    display: inline-block;
+    font-weight: bold; }
+  body #numWrong {
+    display: inline-block;
+    font-weight: bold; }
   body #wrongList {
     margin-bottom: 2%; }
