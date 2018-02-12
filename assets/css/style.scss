@@ -30,12 +30,28 @@ body {
   h1 {
     font-family: $game-hdr-font;
   }
+  h5 {
+    height: 120%;
+  }
   .game-hdr-bg {
     background-color: $game-theme-1a;
   }
   .game-btn {
     color: $game-theme-1c;
     background-color: $game-theme-1a;
+   // border-color: $game-theme-1b;
+  //  border-width: 2px solid $game-theme-1b;
+    border: 2px solid $game-theme-1b;
+  //  padding: .375rem .75rem;
+  //  font-size: 1rem;
+  //  line-height: 1.5;
+    border-radius: .25rem;
+  //  transition: color .15s ease-in-out,$game-theme-1b .15s ease-in-out,$game-theme-1a .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+  .game-btn:hover {
+    background-color: $game-theme-1c;
+    color: $game-theme-1a;
+    font-weight: bold;
   }
   .lead {
     font-family: $game-lead-font;
@@ -51,8 +67,13 @@ body {
       height: 120%;
     }
   }
-  h5 {
-    height: 120%;
+  #hangmanWord {
+    font-weight: bold;
+    font-size: 300%;
+    letter-spacing: 3px;
+  }
+  #wrongList {
+    margin-bottom: 2%;
   }
 
 }

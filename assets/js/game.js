@@ -8,7 +8,7 @@
  *  using up 10 guesses, the player wins. Otherwise, the player loses.
  * 
  ******************************************************************************************/
-const MAX_GUESSES = 12;
+const MAX_GUESSES = 10;
 const DEBUG = true;
 
 //------------------------------------------------------------------------------------------
@@ -23,11 +23,12 @@ var hangman = {
   totalLosses: 0,
   totalWins: 0,
   wordBank: ["bat","baseball","inning"],
-  wrongGuesses: [],
+  wrongGuessesList: [],
   currentHWord: "",
   htmlText: "",
   startHtml: "",
   htmlBlanks: "",
+  HWordArray: [],
   currentWordGuess: [],
   //------------------------------------------------------------------------
   // hangman Object Methods
@@ -40,9 +41,41 @@ var hangman = {
   displayBlanks: function() {
     for (var i = 0; i < this.currentHWord.length; i++) {
       console.log(this.currentHWord.charAt(i));
-      this.htmlBlanks += "<strong>" + "_" + "</strong>" + " "; 
+      this.htmlBlanks += "<strong>" + "_" + "</strong>" + " ";
+      /* put default underscore in currentWordGuess array */
+      this.currentWordGuess[i] = "_"; 
     }
     return this.htmlBlanks;
+  },
+  isCharAlreadyInGuess: function() {
+    for (var i = 0; i < this.currentWordGuess.length; i++) {
+      if (this.currentGuess === this.currentWordGuess[i])
+        return true;
+    }
+    return false;
+  },
+  isCharAlreadyInWrongList: function() {
+    for (var i = 0; i < this.wrongGuessesList.length; i++) {
+      if (this.currentGuess === this.wrongGuessesList[i])
+        return true;
+    }
+    return false;
+  },
+  setHWordArray: function() {
+    for (var k = 0; k < this.currentHWord.length; k++)  {
+      this.HWordArray[k] = this.currentHWord[k];
+    }
+  },
+  isCharInWord: function() {
+    var isInWord = false;
+    for (var i = 0; i < this.currentHWord.length; i++) {
+      if (this.currentGuess === this.currentHWord[i]) {
+        /* place correct guess's characters in WordGuess array */
+        this.currentWordGuess[i] = this.currentGuess;
+        isInWord = true;
+      }
+    }
+    return isInWord;
   }
 }
 
@@ -50,6 +83,7 @@ var hangman = {
 //------------------------------------------------------------------------------------------
 // FUNCTIONS
 //
+/* initializes data values for new game */
 function initializeGame() {
   hangman.newGame = true;
   hangman.currentGuess = "";
@@ -64,7 +98,16 @@ function initializeGame() {
   hangman.htmlBlanks = "";
   hangman.currentWordGuess = [];
 
-  document.querySelector("#game").innerHTML = "";
+  document.querySelector("#hangmanWord").innerHTML = "";
+  document.querySelector("#wrongSection").innerHTML = "";
+  document.querySelector("#wrongList").innerHTML = "";
+}
+
+/* checks for valid alphabetic character, input is in lower case 
+ *  source: https://lowrey.me/test-if-a-string-is-alphanumeric-in-javascript/
+ */
+function validAlphaChar(ch){
+  return ch.match(/^[a-z]+$/i) !== null;
 }
 /*
   print current state of game
@@ -84,7 +127,7 @@ function startNewGame() {
   initializeGame();
 
   var wordToGuess = hangman.getRandomWord();
-  if (DEBUG) {console.log(wordToGuess);}
+  if (DEBUG) { console.log(wordToGuess); }
 
   // Display start message to begin game
   hangman.startHtml = "<h5> Hangman game has begun. Start Guessing by pressing keys 'a' to 'z'.</h5>";
@@ -101,21 +144,54 @@ function startNewGame() {
     if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord); }
 
     //  while (hangman.numWrongGuesses < MAX_GUESSES) {
-    // Determines which key was pressed.
-    hangman.currentGuess = event.key;
+    // Determines which key was pressed. Convert to lower case
+    hangman.currentGuess = event.key.toLowerCase();
+
     // check for valid character key
-    if (hangman.newGame === true) {
-      //hangman.htmlText += "<h6>Wrong Guesses:</h6>";
-      document.querySelector("#wrongGuessList").innerHTML += "<h5>Wrong Guesses:</h5>";
-      hangman.newGame = false;
+    if (validAlphaChar(hangman.currentGuess)) {
+      if (DEBUG) { console.log("VALID character"); }
+      if (hangman.newGame === true) {
+        document.querySelector("#wrongSection").innerHTML += "<h5>Wrong Guesses:</h5>";
+        hangman.newGame = false;
+        hangman.wrongGuesses = 0;
+      }
+      //   see if currentChar in hangmanWord or wrongGuess[]
+      if ((hangman.isCharAlreadyInGuess()) || (hangman.isCharAlreadyInWrongList())) {
+        console.log("key already pressed");
+        // key is alreadpy pressed, waits for next key press;
+      }
+      else {
+        //   if currentChar in hangmanWord
+        if (hangman.isCharInWord() === true) {
+          document.querySelector("#hangmanWord").innerHTML = hangman.currentWordGuess.join(" ");
+          if (hangman.currentWordGuess === hangman.currentHWord) {
+            if (DEBUG) {console.log("You won!");}
+            hangman.totalWins++;
+          }
+        }
+//          push currentChar into currentWordGuess[]
+//          /* push currentChar into appropriate positions of array */
+//          if currentWordGuess === hangmanWord
+//              display you win
+//              increment wins
+        else {
+          /* push wrong guess onto WrongList array */
+          hangman.wrongGuessesList.push(hangman.currentGuess);
+          hangman.htmlText = "<strong>" + hangman.currentGuess + "</strong>  ";
+          document.querySelector("#wrongList").innerHTML += hangman.htmlText;
+          hangman.numWrongGuesses++;
+          if (DEBUG) {console.log("Wrong Guesses: " + hangman.numWrongGuesses);}
+          if (hangman.numWrongGuesses === MAX_GUESSES) {
+            if (DEBUG) {console.log("You lose!");}
+            hangman.totalLosses++;
+          }
+        }
+      }
+    } else {
+      if (DEBUG) { console.log("NOT a valid character"); }
     }
-//    hangman.htmlText = "<strong>" + hangman.currentGuess + "</strong>  ";
-    document.querySelector("#game").innerHTML += "<strong>" + hangman.currentGuess + "</strong>  ";
   }
 }
-    //}
-  //}
-//}
 
 // press Start button to begin game
 //sButton = document.getElementById("#startButton");
@@ -123,9 +199,7 @@ function startNewGame() {
 
 
 
-// get randomly chosen word from word bank,
-// display blanks for each letter of word... (display on console for now)
-// set this word to hangmanWord
+
 
 // get player's guesses
 //

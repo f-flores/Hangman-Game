@@ -13,11 +13,19 @@ body {
       right: 10%; }
   body h1 {
     font-family: "Rammetto One", cursive; }
+  body h5 {
+    height: 120%; }
   body .game-hdr-bg {
     background-color: #0E5923; }
   body .game-btn {
     color: #FFF9EC;
-    background-color: #0E5923; }
+    background-color: #0E5923;
+    border: 2px solid #8ED358;
+    border-radius: .25rem; }
+  body .game-btn:hover {
+    background-color: #FFF9EC;
+    color: #0E5923;
+    font-weight: bold; }
   body .lead {
     font-family: "Lobster", cursive;
     font-size: 180%;
@@ -31,5 +39,9 @@ body {
     body .card .card-body .card-title {
       background-color: #FFF9EC;
       height: 120%; }
-  body h5 {
-    height: 120%; }
+  body #hangmanWord {
+    font-weight: bold;
+    font-size: 300%;
+    letter-spacing: 3px; }
+  body #wrongList {
+    margin-bottom: 2%; }
