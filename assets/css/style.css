@@ -36,15 +36,19 @@ body {
     -webkit-transform: rotateZ(-8deg);
     /* Safari 3-8 */
     transform: rotateZ(-8deg); }
-  body .card .card-body {
+  body .card .bg-card {
     background-color: #E9BB4F; }
-    body .card .card-body .card-title {
-      background-color: #FFF9EC;
-      height: 120%; }
+    body .card .bg-card .bg-title {
+      background-color: #FFF9EC; }
   body #hangmanWord {
+    z-index: 3;
     font-weight: bold;
     font-size: 300%;
     letter-spacing: 3px; }
+  body #wonMsg {
+    color: #0E5923;
+    font-weight: bold;
+    font-size: 180%; }
   body #wrongSection {
     display: inline-block;
     font-weight: bold; }
@@ -52,4 +56,13 @@ body {
     display: inline-block;
     font-weight: bold; }
   body #wrongList {
+    font-weight: bold;
+    letter-spacing: 3px;
     margin-bottom: 2%; }
+    body #wrongList p {
+      color: red;
+      text-shadow: 2px 2px black; }
+  body #errorMsg {
+    font-weight: bold;
+    color: red;
+    text-shadow: 1px 1px black; }

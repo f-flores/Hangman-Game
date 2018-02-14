@@ -62,17 +62,24 @@ body {
     -webkit-transform: rotateZ(-8deg); /* Safari 3-8 */
     transform: rotateZ(-8deg);
   }
-  .card .card-body {
+  .card .bg-card {
     background-color: $game-theme-1e;
-    .card-title {
+    .bg-title {
       background-color: $game-theme-1c;
-      height: 120%;
+     // height: 100%;
     }
   }
   #hangmanWord {
+   // display: inline-block;
+    z-index: 3;
     font-weight: bold;
     font-size: 300%;
     letter-spacing: 3px;
+  }
+  #wonMsg {
+    color: $game-theme-1a;
+    font-weight: bold;
+    font-size: 180%;
   }
   #wrongSection {
     display: inline-block;
@@ -83,7 +90,18 @@ body {
     font-weight: bold;
   }
   #wrongList {
+    font-weight: bold;
+    letter-spacing: 3px;
     margin-bottom: 2%;
+    p {
+      color: red;
+      text-shadow: 2px 2px black;
+    }
+  }
+  #errorMsg {
+    font-weight: bold;
+    color: red;
+    text-shadow: 1px 1px black;
   }
 
 }

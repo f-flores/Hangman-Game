@@ -21,13 +21,12 @@ var btn = document.querySelector("#startButton");
 var hangman = {
   newGame: false,
   currentGuess: "",
-  numWrongGuesses: 0,
+  numGuessesLeft: 0,
   totalLosses: 0,
   totalWins: 0,
   wordBank: ["bat","baseball","inning"],
   wrongGuessesList: [],
   currentHWord: "",
-  htmlText: "",
   startHtml: "",
   htmlBlanks: "",
   htmlWrongSection: "",
@@ -41,7 +40,7 @@ var hangman = {
     this.currentHWord = this.wordBank[randomIndex];
     return this.currentHWord;
   },
-  displayBlanks: function() {
+  initWordGuess: function() {
     for (var i = 0; i < this.currentHWord.length; i++) {
       console.log(this.currentHWord.charAt(i));
       this.htmlBlanks += "<strong>" + "_" + "</strong>" + " ";
@@ -90,7 +89,7 @@ var hangman = {
 function initializeGame() {
   hangman.newGame = true;
   hangman.currentGuess = "";
-  hangman.numWrongGuesses = 0;
+  hangman.numGuessesLeft = MAX_GUESSES;
   hangman.totalLosses = 0;
   hangman.totalWins = 0;
   //wordBank: ["bat","baseball","inning"],
@@ -102,8 +101,10 @@ function initializeGame() {
   hangman.currentWordGuess = [];
 
   document.querySelector("#hangmanWord").innerHTML = "";
+  document.querySelector("#wonMsg").innerHTML = "";
   document.querySelector("#wrongSection").innerHTML = "";
   document.querySelector("#wrongList").innerHTML = "";
+  document.querySelector("#errorMsg").innerHTML = "";
 }
 
 /* checks for valid alphabetic character, input is in lower case 
@@ -126,11 +127,11 @@ function validAlphaChar(ch){
 // MAIN PROCEDURE
 //
 function startNewGame() {
-//btn.onclick = function() {
   if (DEBUG) { console.log("Begin Game"); console.log("Initialize object"); }
   initializeGame();
 
   var wordToGuess = hangman.getRandomWord();
+  var validKey = true;
   if (DEBUG) { console.log(wordToGuess); }
 
   // Display start message to begin game
@@ -141,98 +142,85 @@ function startNewGame() {
   hangman.currentHWord = hangman.getRandomWord();
 
   // display blanks for each letter of word... 
-  //hangman.htmlText = hangman.displayBlanks() + "<p>&nbsp;</p>";
-  document.querySelector("#hangmanWord").innerHTML += hangman.displayBlanks() + "<p>&nbsp;</p>";
+  //hangman.htmlText = hangman.initWordGuess() + "<p>&nbsp;</p>";
+  document.querySelector("#hangmanWord").innerHTML += hangman.initWordGuess() + "<br />";
 
   document.onkeyup = function (event) {
-    if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord); }
-
-    //  while (hangman.numWrongGuesses < MAX_GUESSES) {
+    document.querySelector("#errorMsg").innerHTML = ""; // reset error message
+    //  while (hangman.numGuessesLeft > 0) {
     // Determines which key was pressed. Convert to lower case
-    hangman.currentGuess = event.key.toLowerCase();
+    // hangman.currentGuess = event.key.toLowerCase();
+    if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord); 
+                 console.log("Event Key: " + event.key)}
 
-    // check for valid character key
-    if (validAlphaChar(hangman.currentGuess)) {
+
+    // check for valid hangman characters: a..z
+    if ( (validAlphaChar(event.key)) &&
+         (validKey == true) &&
+         (event.key !== "Alt") &&
+         (event.key !== "Shift") &&
+         (event.key !== "CapsLock") &&
+         (event.key !== "Control") &&
+         (event.key !== "Meta") &&
+         (event.key !== "Fn")
+        )
+     {
       if (DEBUG) { console.log("VALID character"); }
+      validKey = true;
+      hangman.currentGuess = event.key.toLowerCase();
       if (hangman.newGame === true) {
-        hangman.htmlWrongSection = "<h5>Wrong Guesses:</h5>"
-        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numWrongGuesses.toString();;
+        hangman.htmlWrongSection = "<h5>Wrong Guesses Remaining:</h5>"
+        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numGuessesLeft.toString();;
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
-      //   see if currentChar in hangmanWord or wrongGuess[]
+      //   check if currentChar already present in guess or wrong list[]
       if ((hangman.isCharAlreadyInGuess()) || (hangman.isCharAlreadyInWrongList())) {
-        console.log("key already pressed");
-        // key is alreadpy pressed, waits for next key press;
+        // key is already pressed, waits for next key press;
+        if (DEBUG){console.log("key already pressed"); }
+        document.querySelector("#errorMsg").innerHTML = "Letter already chosen. Choose another one."
       }
       else {
         //   if currentChar in hangmanWord
         if (hangman.isCharInWord() === true) {
-          document.querySelector("#hangmanWord").innerHTML = hangman.currentWordGuess.join(" ");
+          document.querySelector("#hangmanWord").innerHTML = hangman.currentWordGuess.join(" ")+ "<br />";
           // currentWordGuess is an array of characters, currentHWord is a string....
           // the join method is applied to currentWordGuess in order to convert to a string and correctly compare
           if (hangman.currentWordGuess.join("") === hangman.currentHWord) {
+            // player wins
             if (DEBUG) {console.log(hangman.currentWordGuess + " " + hangman.currentHWord + " You won!");}
             hangman.totalWins++;
+            document.querySelector("#wonMsg").innerHTML += "You won!";
           }
         }
-//          push currentChar into currentWordGuess[]
-//          /* push currentChar into appropriate positions of array */
-//          if currentWordGuess === hangmanWord
-//              display you win
-//              increment wins
         else {
           /* push wrong guess onto WrongList array */
           hangman.wrongGuessesList.push(hangman.currentGuess);
-          hangman.numWrongGuesses++;
-          if (DEBUG) {console.log("Wrong Guesses: " + hangman.numWrongGuesses);}
-          if (hangman.numWrongGuesses === MAX_GUESSES) {
+          /* guesses remaining decreases by one */
+          hangman.numGuessesLeft--;
+          if (DEBUG) {console.log("Wrong Guesses: " + hangman.numGuessesLeft);}
+          //hangman.htmlText = hangman.currentGuess;
+          document.querySelector("#wrongList").innerHTML += hangman.currentGuess;
+          document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
+          if (hangman.numGuessesLeft === 0) {
             if (DEBUG) {console.log("You lose!");}
             hangman.totalLosses++;
+            document.querySelector("#wrongList").innerHTML += "<p>YOU LOSE!</p>";
             //break;
           }
-          hangman.htmlText = "<strong>" + hangman.currentGuess + "</strong>  ";
-          document.querySelector("#wrongList").innerHTML += hangman.htmlText;
-          document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection + hangman.numWrongGuesses.toString();
         }
       }
     } else {
       if (DEBUG) { console.log("NOT a valid character"); }
+      document.querySelector("#errorMsg").innerHTML = "Not a valid character. Please try again.";
+      validKey = false;
+     // event.key = undefined; // clear event.key
     }
   }
 }
 
 btn.onclick = startNewGame;
-// press Start button to begin game
-//sButton = document.getElementById("#startButton");
-//sButton.onmousedown =  startNewGame();
 
-
-
-
-
-// get player's guesses
-//
-// ** game logic **
-//
-// while numWrongGuesses < maxGuesses
-//   get currentChar  
-//   toLowerCase
-//   check if valid currentChar (a...z, A...Z)
-//   see if currentChar in hangmanWord or wrongGuess[] 
-//        display char already pressed, try again
-//        continue nextLoop
-//
-//   if currentChar in hangmanWord
-//          push currentChar into currentWordGuess[]
-//          /* push currentChar into appropriate positions of array */
-//          if currentWordGuess === hangmanWord
-//              display you win
-//              increment wins
-//
-//   else  
-//          increment numWrongGuesses
-//          push currentChar into wrongGuesses
 //   print current state of game
 //          
 // out of loop
