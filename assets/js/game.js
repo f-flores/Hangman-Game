@@ -17,6 +17,12 @@ const DEBUG = true;
 
 var btn = document.querySelector("#startButton");
 
+var scoreBoard = {
+  losses: 0,
+  wins: 0,
+  totalGames: 0
+}
+
 // Hangman game object
 var hangman = {
   newGame: false,
@@ -25,9 +31,12 @@ var hangman = {
   totalLosses: 0,
   totalWins: 0,
   wordBank: ["bat","baseball","inning"],
+  randomFacts: ["The base most stolen in a baseball game is second base.",
+      "The unofficial anthem of American baseball, “Take Me Out to the Ballgame,” is traditionally sung during the middle of the 7th inning. It was written in 1908 by Jack Norworth and Albert von Tilzer, both of whom had never been to a baseball game"
+                ],
+  currentFact: "",
   wrongGuessesList: [],
   currentHWord: "",
-  startHtml: "",
   htmlBlanks: "",
   htmlWrongSection: "",
   HWordArray: [],
@@ -35,6 +44,9 @@ var hangman = {
   //------------------------------------------------------------------------
   // hangman Object Methods
   //
+  getStartHtml: function() {
+    return "<h5> Hangman game has begun. Start Guessing by pressing keys 'a' to 'z'.</h5>";
+  },
   getRandomWord: function() {
     var randomIndex = Math.floor((Math.random() * this.wordBank.length))
     this.currentHWord = this.wordBank[randomIndex];
@@ -85,7 +97,16 @@ var hangman = {
 //------------------------------------------------------------------------------------------
 // FUNCTIONS
 //
+/* random image selector */
+function randomImgSelector() {
+  var imgNames = ["b-diamond.png","baseball.png", "bat-ball.png"];
+  var rIndex = Math.floor(Math.random() * imgNames.length);
+
+  return imgNames[rIndex];
+}
+
 /* initializes data values for new game */
+/* also chooses random fact and updates scoreboard's total games */
 function initializeGame() {
   hangman.newGame = true;
   hangman.currentGuess = "";
@@ -105,6 +126,11 @@ function initializeGame() {
   document.querySelector("#wrongSection").innerHTML = "";
   document.querySelector("#wrongList").innerHTML = "";
   document.querySelector("#errorMsg").innerHTML = "";
+  var rImg = "./assets/images/" + randomImgSelector();
+  document.querySelector("#randomImg").innerHTML = '<img src="' + rImg + '">';
+  var fIndx = scoreBoard.totalGames % hangman.randomFacts.length;
+  if (DEBUG) {console.log("Scoreboard: " + scoreBoard);console.log("factIndex: " + fIndx);}
+  document.querySelector("#randomFacts").innerHTML = hangman.randomFacts[fIndx];
 }
 
 /* checks for valid alphabetic character, input is in lower case 
@@ -131,18 +157,15 @@ function startNewGame() {
   initializeGame();
 
   var wordToGuess = hangman.getRandomWord();
-  var validKey = true;
   if (DEBUG) { console.log(wordToGuess); }
 
   // Display start message to begin game
-  hangman.startHtml = "<h5> Hangman game has begun. Start Guessing by pressing keys 'a' to 'z'.</h5>";
-  document.querySelector("#introText").innerHTML = hangman.startHtml;
+  document.querySelector("#introText").innerHTML = hangman.getStartHtml();
 
   // get randomly chosen word from word bank
   hangman.currentHWord = hangman.getRandomWord();
 
   // display blanks for each letter of word... 
-  //hangman.htmlText = hangman.initWordGuess() + "<p>&nbsp;</p>";
   document.querySelector("#hangmanWord").innerHTML += hangman.initWordGuess() + "<br />";
 
   document.onkeyup = function (event) {
@@ -150,21 +173,22 @@ function startNewGame() {
     //  while (hangman.numGuessesLeft > 0) {
     // Determines which key was pressed. Convert to lower case
     // hangman.currentGuess = event.key.toLowerCase();
-    if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord); 
-                 console.log("Event Key: " + event.key)}
+
 
 
     // check for valid hangman characters: a..z
     if ( (validAlphaChar(event.key)) &&
-         (validKey == true) &&
          (event.key !== "Alt") &&
          (event.key !== "Shift") &&
          (event.key !== "CapsLock") &&
          (event.key !== "Control") &&
          (event.key !== "Meta") &&
-         (event.key !== "Fn")
+         (event.key !== "Enter") &&
+         (event.key !== "Fn") 
         )
      {
+      if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord); 
+      console.log("Event Key: " + event.key)}
       if (DEBUG) { console.log("VALID character"); }
       validKey = true;
       hangman.currentGuess = event.key.toLowerCase();
@@ -190,6 +214,8 @@ function startNewGame() {
             // player wins
             if (DEBUG) {console.log(hangman.currentWordGuess + " " + hangman.currentHWord + " You won!");}
             hangman.totalWins++;
+            scoreBoard.wins++;
+            scoreBoard.totalGames++;
             document.querySelector("#wonMsg").innerHTML += "You won!";
           }
         }
@@ -199,12 +225,13 @@ function startNewGame() {
           /* guesses remaining decreases by one */
           hangman.numGuessesLeft--;
           if (DEBUG) {console.log("Wrong Guesses: " + hangman.numGuessesLeft);}
-          //hangman.htmlText = hangman.currentGuess;
           document.querySelector("#wrongList").innerHTML += hangman.currentGuess;
           document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
           if (hangman.numGuessesLeft === 0) {
             if (DEBUG) {console.log("You lose!");}
             hangman.totalLosses++;
+            scoreBoard.losses++;
+            scoreBoard.totalGames++;
             document.querySelector("#wrongList").innerHTML += "<p>YOU LOSE!</p>";
             //break;
           }
@@ -213,8 +240,6 @@ function startNewGame() {
     } else {
       if (DEBUG) { console.log("NOT a valid character"); }
       document.querySelector("#errorMsg").innerHTML = "Not a valid character. Please try again.";
-      validKey = false;
-     // event.key = undefined; // clear event.key
     }
   }
 }

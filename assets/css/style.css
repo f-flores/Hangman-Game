@@ -40,6 +40,8 @@ body {
     background-color: #E9BB4F; }
     body .card .bg-card .bg-title {
       background-color: #FFF9EC; }
+  body .p-card {
+    font-weight: bold; }
   body #hangmanWord {
     z-index: 3;
     font-weight: bold;
@@ -66,3 +68,7 @@ body {
     font-weight: bold;
     color: red;
     text-shadow: 1px 1px black; }
+  body #randomImg {
+    width: 50%;
+    height: 50%;
+    float: left; }
