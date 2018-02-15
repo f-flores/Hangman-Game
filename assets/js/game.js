@@ -20,7 +20,10 @@ var btn = document.querySelector("#startButton");
 var scoreBoard = {
   losses: 0,
   wins: 0,
-  totalGames: 0
+  totalGames: 0,
+  getTotal: function() {
+    return this.losses + this.wins;
+  }
 }
 
 // Hangman game object
@@ -111,9 +114,6 @@ function initializeGame() {
   hangman.newGame = true;
   hangman.currentGuess = "";
   hangman.numGuessesLeft = MAX_GUESSES;
-  hangman.totalLosses = 0;
-  hangman.totalWins = 0;
-  //wordBank: ["bat","baseball","inning"],
   hangman.wrongGuessesList = [];
   hangman.currentHWord = "";
   hangman.htmlText = "";
@@ -137,15 +137,36 @@ function initializeGame() {
  *  source: https://lowrey.me/test-if-a-string-is-alphanumeric-in-javascript/
  */
 function validAlphaChar(ch){
+  vchar = ch.match(/^[a-z]+$/i) !== null;
+  console.log("in validAlphaChar: " + vchar);
   return ch.match(/^[a-z]+$/i) !== null;
 }
+
 /*
-  print current state of game
-  get current status
-*/
-/* function printGameState {
-  hangmanHtml = " "
-} */
+ * printScores displays values of Scoreboard
+ */
+function printScores() {
+  var scoreSection = document.querySelector("#scores");
+  var htmlText = '<h6>Scores </h6>' +
+                'Wins: ' + scoreBoard.wins +
+                'Losses: ' + scoreBoard.losses +
+                'Games Played: ' + scoreBoard.getTotal();
+  scoreSection.innerHTML = htmlText;
+}
+
+/*
+ * returns false if a non-character key, such as Alt, Shift, Capslock, Control, Meta, Enter or Fn
+ * were pressed, other wise returns true
+ */
+function isNormalKey(k) {
+  return (event.key !== "Alt") &&
+         (event.key !== "Shift") &&
+         (event.key !== "CapsLock") &&
+         (event.key !== "Control") &&
+         (event.key !== "Meta") &&
+         (event.key !== "Enter") &&
+         (event.key !== "Fn") ;
+}
 
 
 
@@ -153,7 +174,6 @@ function validAlphaChar(ch){
 // MAIN PROCEDURE
 //
 function startNewGame() {
-  if (DEBUG) { console.log("Begin Game"); console.log("Initialize object"); }
   initializeGame();
 
   var wordToGuess = hangman.getRandomWord();
@@ -168,72 +188,50 @@ function startNewGame() {
   // display blanks for each letter of word... 
   document.querySelector("#hangmanWord").innerHTML += hangman.initWordGuess() + "<br />";
 
-  document.onkeyup = function (event) {
+  document.onkeyup = function(event) {
     document.querySelector("#errorMsg").innerHTML = ""; // reset error message
-    //  while (hangman.numGuessesLeft > 0) {
-    // Determines which key was pressed. Convert to lower case
-    // hangman.currentGuess = event.key.toLowerCase();
-
-
-
     // check for valid hangman characters: a..z
-    if ( (validAlphaChar(event.key)) &&
-         (event.key !== "Alt") &&
-         (event.key !== "Shift") &&
-         (event.key !== "CapsLock") &&
-         (event.key !== "Control") &&
-         (event.key !== "Meta") &&
-         (event.key !== "Enter") &&
-         (event.key !== "Fn") 
-        )
-     {
-      if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord); 
-      console.log("Event Key: " + event.key)}
-      if (DEBUG) { console.log("VALID character"); }
-      validKey = true;
+    if ( validAlphaChar(event.key) && isNormalKey(event.key) ) {
+      if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord + " *Valid* and *Normal* key"); 
+                   console.log("Event Key: " + event.key);}
+      // Determines which key was pressed. Convert to lower case
       hangman.currentGuess = event.key.toLowerCase();
       if (hangman.newGame === true) {
         hangman.htmlWrongSection = "<h5>Wrong Guesses Remaining:</h5>"
-        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numGuessesLeft.toString();;
+        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
       //   check if currentChar already present in guess or wrong list[]
       if ((hangman.isCharAlreadyInGuess()) || (hangman.isCharAlreadyInWrongList())) {
-        // key is already pressed, waits for next key press;
-        if (DEBUG){console.log("key already pressed"); }
+        // key is already pressed, request next key press;
+        if (DEBUG){console.log("key already pressed"); } 
         document.querySelector("#errorMsg").innerHTML = "Letter already chosen. Choose another one."
-      }
-      else {
-        //   if currentChar in hangmanWord
-        if (hangman.isCharInWord() === true) {
+      } else {
+        if (hangman.isCharInWord() === true) { //   if currentChar in hangmanWord
           document.querySelector("#hangmanWord").innerHTML = hangman.currentWordGuess.join(" ")+ "<br />";
           // currentWordGuess is an array of characters, currentHWord is a string....
           // the join method is applied to currentWordGuess in order to convert to a string and correctly compare
           if (hangman.currentWordGuess.join("") === hangman.currentHWord) {
             // player wins
             if (DEBUG) {console.log(hangman.currentWordGuess + " " + hangman.currentHWord + " You won!");}
-            hangman.totalWins++;
             scoreBoard.wins++;
-            scoreBoard.totalGames++;
             document.querySelector("#wonMsg").innerHTML += "You won!";
+            printScores();
           }
-        }
-        else {
-          /* push wrong guess onto WrongList array */
+        } else {
+          // push wrong guess onto WrongList array 
           hangman.wrongGuessesList.push(hangman.currentGuess);
-          /* guesses remaining decreases by one */
+          // guesses remaining decreases by one
           hangman.numGuessesLeft--;
           if (DEBUG) {console.log("Wrong Guesses: " + hangman.numGuessesLeft);}
           document.querySelector("#wrongList").innerHTML += hangman.currentGuess;
           document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
           if (hangman.numGuessesLeft === 0) {
             if (DEBUG) {console.log("You lose!");}
-            hangman.totalLosses++;
             scoreBoard.losses++;
-            scoreBoard.totalGames++;
             document.querySelector("#wrongList").innerHTML += "<p>YOU LOSE!</p>";
-            //break;
+            printScores();
           }
         }
       }
@@ -245,14 +243,3 @@ function startNewGame() {
 }
 
 btn.onclick = startNewGame;
-
-//   print current state of game
-//          
-// out of loop
-// if num Guesses === MAX_GUESSES
-//    display you lose
-//    increment losses
-//
-// print current state of game
-
-/* document.onkeyup = function(event) { */
