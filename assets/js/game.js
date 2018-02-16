@@ -80,11 +80,9 @@ var hangman = {
       if (this.currentHWord.charAt(i) === " ") {
         this.currentWordGuess[i] = " ";
         this.htmlBlanks += " ";
-     /*    this.htmlBlanks += "<strong>" + "&nbsp;" + "</strong>" + " "; */
       } else {
         this.currentWordGuess[i] = "_";
         this.htmlBlanks += "_";
-       /*  this.htmlBlanks += "<strong>" + "_" + "</strong>" + " "; */
       }
     }
     return this.htmlBlanks;
