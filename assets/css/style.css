@@ -42,11 +42,14 @@ body {
       background-color: #FFF9EC; }
   body .p-card {
     font-weight: bold; }
+  body #randomFacts {
+    font-weight: bold; }
   body #hangmanWord {
+    display: inline-block;
     z-index: 3;
     font-weight: bold;
-    font-size: 300%;
-    letter-spacing: 3px; }
+    font-size: 200%;
+    letter-spacing: 5px; }
   body #wonMsg {
     color: #0E5923;
     font-weight: bold;
@@ -68,7 +71,19 @@ body {
     font-weight: bold;
     color: red;
     text-shadow: 1px 1px black; }
-  body #randomImg {
+  body #randomImg img {
     width: 50%;
     height: 50%;
     float: left; }
+  body #scores {
+    text-decoration: none;
+    background-color: #8ED358;
+    color: #0E5923;
+    font-weight: bold;
+    margin-bottom: 4px; }
+    body #scores ul {
+      margin-left: -30px; }
+    body #scores li {
+      list-style-type: none;
+      display: inline-block;
+      margin-right: 8px; }

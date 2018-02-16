@@ -20,7 +20,6 @@ var btn = document.querySelector("#startButton");
 var scoreBoard = {
   losses: 0,
   wins: 0,
-  totalGames: 0,
   getTotal: function() {
     return this.losses + this.wins;
   }
@@ -31,13 +30,23 @@ var hangman = {
   newGame: false,
   currentGuess: "",
   numGuessesLeft: 0,
-  totalLosses: 0,
-  totalWins: 0,
-  wordBank: ["bat","baseball","inning"],
+  wordBank: ["wild pitch","Babe Ruth","inning","baseball","World Series","Cooperstown", "Hank Aaron","Joe Dimaggio","Yankees","Red Sox","perfect game","major league","Cardinals","Ty Cobb","intentional walk","balk","pitcher","catcher","umpire","left field","mound","glove","bat","coach","manager","dugout","second base","homerun"],
   randomFacts: ["The base most stolen in a baseball game is second base.",
-      "The unofficial anthem of American baseball, “Take Me Out to the Ballgame,” is traditionally sung during the middle of the 7th inning. It was written in 1908 by Jack Norworth and Albert von Tilzer, both of whom had never been to a baseball game"
+      "The unofficial anthem of American baseball, “Take Me Out to the Ballgame,” is traditionally sung during the middle of the 7th inning. It was written in 1908 by Jack Norworth and Albert von Tilzer, both of whom had never been to a baseball game",
+      "Mo’ne Davis (2001– ) became the first female to win a Little League World Series baseball game.",
+      "No woman has ever played in a major league baseball game. American sports executive Effa Louise Manley (1897–1981) is the first and only woman inducted into the Baseball Hall of Fame.",
+      "Early baseballs contained anything from a rock to a walnut in the center. The life span of a major league baseball is 5–7 pitches. During a typical game, approximately 70 balls are used.",
+      "While baseball initially started in the U.S., it has spread worldwide. Today more than 100 countries are part of the International Baseball Federation. Japan has the largest pro baseball league outside the U.S.",
+      "Baseball’s L.A. Dodgers, originally founded in Brooklyn, are named after the legendary skill that that local residents showed at “dodging” the city’s trolley streetcar system.",
+      "The baseball team with the most World Series wins is the New York Yankees with 27 titles.",
+      "A 'can of corn' is an easy fly ball. The term comes from when old-time grocers used their aprons to catch cans knocked from a high shelf.",
+      "Craig Biggio (1965– ) of the Houston Astros holds the record for a player most often hit by a pitch.",
+      "In 2008, Dr. David A. Peters found that sliding headfirst into a base is faster than a feet-first slide.",
+      "The oldest baseball park still in use is Fenway Park, the home field of the Boston Red Sox, which debuted in 1912",
+      "The New York Yankees were the first baseball team to wear numbers on their backs, in the 1920s. They initially wore numbers based on the batting order. Babe Ruth always hit third, so he was number 3.",
+      "For the first half of the 20th century, major league teams barred African-Americans from participating in its baseball games. However, African-Americans formed “Negro Leagues,” which had some of the greatest players of the century.",
+      "The Yankees’ Mickey Mantle holds the record for the longest home run on record for a 565-foot clout hit at Washington DC’s old Griffith Stadium on April 17, 1953. As a switch hitter, he was batting right-handed against left-handed pitcher Chuck Stobbs from the Washington Senators."
                 ],
-  currentFact: "",
   wrongGuessesList: [],
   currentHWord: "",
   htmlBlanks: "",
@@ -57,16 +66,38 @@ var hangman = {
   },
   initWordGuess: function() {
     for (var i = 0; i < this.currentHWord.length; i++) {
-      console.log(this.currentHWord.charAt(i));
-      this.htmlBlanks += "<strong>" + "_" + "</strong>" + " ";
+      if (DEBUG) {console.log(this.currentHWord.charAt(i));}
+      
       /* put default underscore in currentWordGuess array */
-      this.currentWordGuess[i] = "_"; 
+      if (this.currentHWord.charAt(i) === " ") {
+        this.currentWordGuess[i] = " ";
+        this.htmlBlanks += " ";
+     /*    this.htmlBlanks += "<strong>" + "&nbsp;" + "</strong>" + " "; */
+      } else {
+        this.currentWordGuess[i] = "_";
+        this.htmlBlanks += "_";
+       /*  this.htmlBlanks += "<strong>" + "_" + "</strong>" + " "; */
+      }
     }
     return this.htmlBlanks;
   },
+  /* displays current Guess 'correctly'. That is, with upper case or lower case. */
+  displayGuess: function() {
+    var wordWithCases = [];
+    for (var i = 0; i < this.currentHWord.length; i++) {
+      if ((this.currentWordGuess[i] !== " ") &&  
+          (this.currentWordGuess[i] !== "_")) {
+      /* this condition means letter has been guessed */
+        this.currentWordGuess[i] = this.currentHWord.charAt(i);
+      }
+    }
+    return this.currentWordGuess;
+  },
   isCharAlreadyInGuess: function() {
     for (var i = 0; i < this.currentWordGuess.length; i++) {
-      if (this.currentGuess === this.currentWordGuess[i])
+      /* since currentGuess is automatically converted to lowercase, the currentWordGuess[i] is
+         also converted to lowercase */
+      if (this.currentGuess === this.currentWordGuess[i].toLowerCase())
         return true;
     }
     return false;
@@ -86,7 +117,8 @@ var hangman = {
   isCharInWord: function() {
     var isInWord = false;
     for (var i = 0; i < this.currentHWord.length; i++) {
-      if (this.currentGuess === this.currentHWord[i]) {
+      if ((this.currentGuess === this.currentHWord[i]) ||
+          (this.currentGuess.toUpperCase() === this.currentHWord[i]))  {
         /* place correct guess's characters in WordGuess array */
         this.currentWordGuess[i] = this.currentGuess;
         isInWord = true;
@@ -102,14 +134,18 @@ var hangman = {
 //
 /* random image selector */
 function randomImgSelector() {
-  var imgNames = ["b-diamond.png","baseball.png", "bat-ball.png"];
+  var imgNames = ["baseball.png", "bat-ball.png","baseball-swing.jpg","diamond.JPG","umpire-calls-pitch.png",
+    "intentional-walk.jpg","cooperstown.jpg","baseball1866.jpg","little-league-ws.jpg","JackieRobinson1945.jpg","Babe_Ruth.jpg","Baseball_positions.png"];
   var rIndex = Math.floor(Math.random() * imgNames.length);
 
   return imgNames[rIndex];
 }
 
-/* initializes data values for new game */
-/* also chooses random fact and updates scoreboard's total games */
+/* 
+ * Initializes game. This includes resetting relevant hangman object's values,
+ * choosing an image to display, and selecting a random fact. Also, this function
+ * has the "Start Game" button lose focus.
+ */
 function initializeGame() {
   hangman.newGame = true;
   hangman.currentGuess = "";
@@ -127,18 +163,20 @@ function initializeGame() {
   document.querySelector("#wrongList").innerHTML = "";
   document.querySelector("#errorMsg").innerHTML = "";
   var rImg = "./assets/images/" + randomImgSelector();
-  document.querySelector("#randomImg").innerHTML = '<img src="' + rImg + '">';
-  var fIndx = scoreBoard.totalGames % hangman.randomFacts.length;
-  if (DEBUG) {console.log("Scoreboard: " + scoreBoard);console.log("factIndex: " + fIndx);}
+  document.querySelector("#randomImg").innerHTML = '<img src="' + rImg + '"alt="Baseball image">';
+  var fIndx = Math.floor(Math.random() * hangman.randomFacts.length);
+  if (DEBUG) {console.log("Scoreboard: " + scoreBoard);console.log("factIndex: " + fIndx);
+              console.log("Fact: " + hangman.randomFacts[fIndx]);}
   document.querySelector("#randomFacts").innerHTML = hangman.randomFacts[fIndx];
+
+  btn.blur();
 }
 
-/* checks for valid alphabetic character, input is in lower case 
+/* 
+ * checks for valid alphabetic character, input is in lower case 
  *  source: https://lowrey.me/test-if-a-string-is-alphanumeric-in-javascript/
  */
 function validAlphaChar(ch){
-  vchar = ch.match(/^[a-z]+$/i) !== null;
-  console.log("in validAlphaChar: " + vchar);
   return ch.match(/^[a-z]+$/i) !== null;
 }
 
@@ -147,10 +185,11 @@ function validAlphaChar(ch){
  */
 function printScores() {
   var scoreSection = document.querySelector("#scores");
-  var htmlText = '<h6>Scores </h6>' +
-                'Wins: ' + scoreBoard.wins +
-                'Losses: ' + scoreBoard.losses +
-                'Games Played: ' + scoreBoard.getTotal();
+  scoreSection.setAttribute("class","col-md-9");
+  var htmlText = '<h5>SCORES</h5>' +
+                '<ul><li>Wins:  ' + scoreBoard.wins +
+                '</li><li>Losses:  ' + scoreBoard.losses +
+                '</li><li></li>Games Played:  ' + scoreBoard.getTotal() + '</li></ul>';
   scoreSection.innerHTML = htmlText;
 }
 
@@ -177,7 +216,7 @@ function startNewGame() {
   initializeGame();
 
   var wordToGuess = hangman.getRandomWord();
-  if (DEBUG) { console.log(wordToGuess); }
+  if (DEBUG) { console.log("Hangman word to guess: " + wordToGuess); }
 
   // Display start message to begin game
   document.querySelector("#introText").innerHTML = hangman.getStartHtml();
@@ -187,17 +226,18 @@ function startNewGame() {
 
   // display blanks for each letter of word... 
   document.querySelector("#hangmanWord").innerHTML += hangman.initWordGuess() + "<br />";
+  //document.querySelector("#hangmanWord").focus();
+
 
   document.onkeyup = function(event) {
     document.querySelector("#errorMsg").innerHTML = ""; // reset error message
     // check for valid hangman characters: a..z
     if ( validAlphaChar(event.key) && isNormalKey(event.key) ) {
-      if (DEBUG) { console.log("Hangman Word to Guess: " + hangman.currentHWord + " *Valid* and *Normal* key"); 
-                   console.log("Event Key: " + event.key);}
+      if (DEBUG) { console.log( " *Valid* and *Normal* key. Event Key: " + event.key);}
       // Determines which key was pressed. Convert to lower case
       hangman.currentGuess = event.key.toLowerCase();
       if (hangman.newGame === true) {
-        hangman.htmlWrongSection = "<h5>Wrong Guesses Remaining:</h5>"
+        hangman.htmlWrongSection = "<h5>Guesses Remaining:</h5>"
         document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
@@ -209,12 +249,13 @@ function startNewGame() {
         document.querySelector("#errorMsg").innerHTML = "Letter already chosen. Choose another one."
       } else {
         if (hangman.isCharInWord() === true) { //   if currentChar in hangmanWord
-          document.querySelector("#hangmanWord").innerHTML = hangman.currentWordGuess.join(" ")+ "<br />";
+          document.querySelector("#hangmanWord").innerHTML = hangman.displayGuess().join("") + "<br />";
+          if (DEBUG) {console.log("Guess: " + hangman.currentWordGuess.join("") + " HWord: " + hangman.currentHWord)};
           // currentWordGuess is an array of characters, currentHWord is a string....
           // the join method is applied to currentWordGuess in order to convert to a string and correctly compare
           if (hangman.currentWordGuess.join("") === hangman.currentHWord) {
             // player wins
-            if (DEBUG) {console.log(hangman.currentWordGuess + " " + hangman.currentHWord + " You won!");}
+            if (DEBUG) {console.log(" You won!");}
             scoreBoard.wins++;
             document.querySelector("#wonMsg").innerHTML += "You won!";
             printScores();
@@ -236,8 +277,8 @@ function startNewGame() {
         }
       }
     } else {
-      if (DEBUG) { console.log("NOT a valid character"); }
-      document.querySelector("#errorMsg").innerHTML = "Not a valid character. Please try again.";
+        if (DEBUG) { console.log("NOT a valid character"); }
+        document.querySelector("#errorMsg").innerHTML = "Not a valid character. Please try again.";
     }
   }
 }

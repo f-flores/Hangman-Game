@@ -72,12 +72,15 @@ body {
   .p-card {
     font-weight: bold;
   }
+  #randomFacts {
+    font-weight: bold;
+  }
   #hangmanWord {
-   // display: inline-block;
+    display: inline-block;
     z-index: 3;
     font-weight: bold;
-    font-size: 300%;
-    letter-spacing: 3px;
+    font-size: 200%;
+    letter-spacing: 5px;
   }
   #wonMsg {
     color: $game-theme-1a;
@@ -107,9 +110,27 @@ body {
     text-shadow: 1px 1px black;
   }
   #randomImg {
-    width: 50%;
-    height: 50%;
-    float: left;
+    img {
+      width: 50%;
+      height: 50%;
+      float: left;
+    }
+  }
+  #scores {
+//    box-sizing: border-box;
+    ul {
+      margin-left: -30px;
+    }
+    li {
+      list-style-type: none;
+      display: inline-block;
+      margin-right: 8px;
+    }
+    text-decoration: none;
+    background-color: $game-theme-1b;
+    color: $game-theme-1a;
+    font-weight: bold;
+    margin-bottom: 4px;
   }
 
 }
