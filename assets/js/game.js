@@ -9,7 +9,7 @@
  * 
  ******************************************************************************************/
 const MAX_GUESSES = 10;
-const DEBUG = true;
+const DEBUG = false;
 
 //------------------------------------------------------------------------------------------
 // VARIABLES and OBJECTS
@@ -30,7 +30,7 @@ var hangman = {
   newGame: false,
   currentGuess: "",
   numGuessesLeft: 0,
-  wordBank: ["wild pitch","Babe Ruth","inning","baseball","World Series","Cooperstown", "Hank Aaron","Joe Dimaggio","Yankees","Red Sox","perfect game","major league","Cardinals","Ty Cobb","intentional walk","balk","pitcher","catcher","umpire","left field","mound","glove","bat","coach","manager","dugout","second base","homerun"],
+  wordBank: ["wild pitch","Babe Ruth","inning","baseball","World Series","Cooperstown", "Hank Aaron","Joe Dimaggio","Yankees","Red Sox","perfect game","major league","Cardinals","Ty Cobb","intentional walk","balk","pitcher","catcher","umpire","left field","mound","glove","bat","coach","manager","dugout","second base","homerun","helmet","designated hitter","Jackie Robinson","Roberto Clemente","Yogi Berra","outfield","right field","steal base","artificial turf","wave","bleachers","scoreboard","team mascot","infield","shortstop","batting average","earned runs","double play","bunt","farm system","fly ball","foul ball","grand slam","line drive","minor league","Seattle Mariners","Orioles","David Ortiz","out","strike","knuckle ball","slider","walk","squeeze play","fan"],
   randomFacts: ["The base most stolen in a baseball game is second base.",
       "The unofficial anthem of American baseball, “Take Me Out to the Ballgame,” is traditionally sung during the middle of the 7th inning. It was written in 1908 by Jack Norworth and Albert von Tilzer, both of whom had never been to a baseball game",
       "Mo’ne Davis (2001– ) became the first female to win a Little League World Series baseball game.",
@@ -45,7 +45,15 @@ var hangman = {
       "The oldest baseball park still in use is Fenway Park, the home field of the Boston Red Sox, which debuted in 1912",
       "The New York Yankees were the first baseball team to wear numbers on their backs, in the 1920s. They initially wore numbers based on the batting order. Babe Ruth always hit third, so he was number 3.",
       "For the first half of the 20th century, major league teams barred African-Americans from participating in its baseball games. However, African-Americans formed “Negro Leagues,” which had some of the greatest players of the century.",
-      "The Yankees’ Mickey Mantle holds the record for the longest home run on record for a 565-foot clout hit at Washington DC’s old Griffith Stadium on April 17, 1953. As a switch hitter, he was batting right-handed against left-handed pitcher Chuck Stobbs from the Washington Senators."
+      "The Yankees’ Mickey Mantle holds the record for the longest home run on record for a 565-foot clout hit at Washington DC’s old Griffith Stadium on April 17, 1953. As a switch hitter, he was batting right-handed against left-handed pitcher Chuck Stobbs from the Washington Senators.",
+      "There is a rule in baseball that before every game, an umpire should remove the shine from the new baseballs by rubbing them with mud from a creek in Burlington County, New Jersey.",
+      "The first U.S. president to throw the ceremonial first ball was William Howard Taft (a former semipro baseball player) on April 14, 1910. American presidents, except Jimmy Carter, have been throwing out the first ball on Opening Day ever since.",
+      "'The Star-Spangled Banner' was performed for the first time at a sporting event on September 5, 1918, in the middle of the 7th inning of Game 1 of the World Series between the Boston Red Sox and the Chicago Cubs at (rented out) Comiskey Park.",
+      "Ken Griffey Sr. and Ken Griffey Jr. became the first father and son to play in the major leagues as teammates for the Seattle Mariners in 1990. On September 14, 1990, they hit back-to-back home runs, creating another father-son baseball first.",
+      "Visiting teams wear (at least mostly) gray uniforms so fans can easily distinguish between the visiting team and the home team. The tradition dates back to the late 1800s when travelling teams did not have time to launder their uniforms and, consequently, wore gray to hide the dirt.",
+      "The first pro baseball game ever to be aired on television was on August 26, 1939. It was a doubleheader between Brooklyn and Cincinnati.",
+      "From 1995 to 2001, every seat at Jacobs Field was sold out every night for 455 baseball games in a row. The Cleveland Indians retired the number 455 in honor of their fans.",
+      "Hot dogs are the most popular ballpark food item. Baseball fans ate 21,357,316 hot dogs and 5,508,887 sausages during the 2014 major league season. That is enough hot dogs to stretch from Dodger Stadium in LA to Wrigley Field in Chicago."
                 ],
   wrongGuessesList: [],
   currentHWord: "",
@@ -163,7 +171,7 @@ function initializeGame() {
   document.querySelector("#wrongList").innerHTML = "";
   document.querySelector("#errorMsg").innerHTML = "";
   var rImg = "./assets/images/" + randomImgSelector();
-  document.querySelector("#randomImg").innerHTML = '<img src="' + rImg + '"alt="Baseball image">';
+  document.querySelector("#randomImg").innerHTML = '<img class="img-fluid" src="' + rImg + '"alt="Baseball image">';
   var fIndx = Math.floor(Math.random() * hangman.randomFacts.length);
   if (DEBUG) {console.log("Scoreboard: " + scoreBoard);console.log("factIndex: " + fIndx);
               console.log("Fact: " + hangman.randomFacts[fIndx]);}
