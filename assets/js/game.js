@@ -104,7 +104,7 @@ var hangman = {
   isCharAlreadyInGuess: function() {
     for (var i = 0; i < this.currentWordGuess.length; i++) {
       /* since currentGuess is automatically converted to lowercase, the currentWordGuess[i] is
-         also converted to lowercase */
+         also converted -temporarily- to lowercase */
       if (this.currentGuess === this.currentWordGuess[i].toLowerCase())
         return true;
     }
@@ -246,7 +246,7 @@ function startNewGame() {
       hangman.currentGuess = event.key.toLowerCase();
       if (hangman.newGame === true) {
         hangman.htmlWrongSection = "<h5>Guesses Remaining:</h5>"
-        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
+        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection +             hangman.numGuessesLeft.toString();
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
