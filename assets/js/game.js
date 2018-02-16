@@ -204,13 +204,14 @@ function printScores() {
  * were pressed, other wise returns true
  */
 function isNormalKey(k) {
-  return (event.key !== "Alt") &&
-         (event.key !== "Shift") &&
-         (event.key !== "CapsLock") &&
-         (event.key !== "Control") &&
-         (event.key !== "Meta") &&
-         (event.key !== "Enter") &&
-         (event.key !== "Fn") ;
+  var specialKeys = ["Alt","Backspace","NumLock","PageUp","Shift","CapsLock","Control","Meta",
+                     "Enter","Fn","PageDown","Home","End","Insert","PrntScr","Delete","Escape"];
+  for (var i = 0; i < specialKeys.length; i++) {
+    if (event.key === specialKeys[i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 
