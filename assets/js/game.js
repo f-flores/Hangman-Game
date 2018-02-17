@@ -9,7 +9,7 @@
  * 
  ******************************************************************************************/
 const MAX_GUESSES = 10;
-const DEBUG = false;
+const DEBUG = true;
 
 //------------------------------------------------------------------------------------------
 // VARIABLES and OBJECTS
@@ -205,7 +205,8 @@ function printScores() {
  */
 function isNormalKey(k) {
   var specialKeys = ["Alt","Backspace","NumLock","PageUp","Shift","CapsLock","Control","Meta",
-                     "Enter","Fn","PageDown","Home","End","Insert","PrntScr","Delete","Escape"];
+                     "Enter","Fn","PageDown","Home","End","Insert","PrntScr","Delete","Escape",
+                     "ArrowRight","ArrowLeft","ArrowDown","ArrowUp"];
   for (var i = 0; i < specialKeys.length; i++) {
     if (event.key === specialKeys[i]) {
       return false;
