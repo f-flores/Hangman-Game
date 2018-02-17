@@ -10,7 +10,9 @@ body {
     body header img {
       position: absolute;
       top: 2%;
-      right: 10%; }
+      right: 10%;
+      width: 25%;
+      height: 25%; }
   body h1 {
     font-family: "Rammetto One", cursive; }
   body h5 {
