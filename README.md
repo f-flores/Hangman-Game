@@ -27,5 +27,5 @@ project and all of the project's assets are locally stored. Javascript needs to 
 This game is optimized for Google Chrome. The game does not correctly display on Microsoft Edge or Mozilla Firefox.
 
 ### Comments
-This game was added to my profile's portfolio:
-[F-Flores github portfolio](https://f-flores.github.io/Responsive-Portfolio/portfolio.html)
+This game was added to my github profile's portfolio:
+[f-flores portfolio](https://f-flores.github.io/Responsive-Portfolio/portfolio.html).
