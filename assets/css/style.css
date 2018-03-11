@@ -38,20 +38,22 @@ body {
     -webkit-transform: rotateZ(-8deg);
     /* Safari 3-8 */
     transform: rotateZ(-8deg); }
-  body .card .bg-card {
-    background-color: #E9BB4F; }
-    body .card .bg-card .bg-title {
-      background-color: #FFF9EC; }
+  body .card {
+    height: 300px; }
+    body .card .bg-card {
+      background-color: #E9BB4F; }
+      body .card .bg-card .bg-title {
+        background-color: #FFF9EC; }
+    body .card #hangmanWord {
+      display: inline-block;
+      z-index: 3;
+      font-weight: bold;
+      font-size: 200%;
+      letter-spacing: 5px; }
   body .p-card {
     font-weight: bold; }
   body #randomFacts {
     font-weight: bold; }
-  body #hangmanWord {
-    display: inline-block;
-    z-index: 3;
-    font-weight: bold;
-    font-size: 200%;
-    letter-spacing: 5px; }
   body #wonMsg {
     color: #0E5923;
     font-weight: bold;

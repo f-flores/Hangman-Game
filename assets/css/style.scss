@@ -64,11 +64,21 @@ body {
     -webkit-transform: rotateZ(-8deg); /* Safari 3-8 */
     transform: rotateZ(-8deg);
   }
-  .card .bg-card {
+  .card { 
+    height: 300px;
+    .bg-card {
     background-color: $game-theme-1e;
-    .bg-title {
-      background-color: $game-theme-1c;
-     // height: 100%;
+      .bg-title {
+        background-color: $game-theme-1c;
+      // height: 100%;
+      }
+    }
+    #hangmanWord {
+      display: inline-block;
+      z-index: 3;
+      font-weight: bold;
+      font-size: 200%;
+      letter-spacing: 5px;
     }
   }
   .p-card {
@@ -77,13 +87,7 @@ body {
   #randomFacts {
     font-weight: bold;
   }
-  #hangmanWord {
-    display: inline-block;
-    z-index: 3;
-    font-weight: bold;
-    font-size: 200%;
-    letter-spacing: 5px;
-  }
+
   #wonMsg {
     color: $game-theme-1a;
     font-weight: bold;
