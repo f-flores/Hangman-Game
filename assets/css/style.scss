@@ -40,23 +40,6 @@ body {
   .game-hdr-bg {
     background-color: $game-theme-1a;
   }
-  .game-btn {
-    color: $game-theme-1c;
-    background-color: $game-theme-1a;
-   // border-color: $game-theme-1b;
-  //  border-width: 2px solid $game-theme-1b;
-    border: 2px solid $game-theme-1b;
-  //  padding: .375rem .75rem;
-  //  font-size: 1rem;
-  //  line-height: 1.5;
-    border-radius: .25rem;
-  //  transition: color .15s ease-in-out,$game-theme-1b .15s ease-in-out,$game-theme-1a .15s ease-in-out,box-shadow .15s ease-in-out;
-  }
-  .game-btn:hover {
-    background-color: $game-theme-1c;
-    color: $game-theme-1a;
-    font-weight: bold;
-  }
   .lead {
     font-family: $game-lead-font;
     font-size: 180%;
@@ -66,19 +49,34 @@ body {
   }
   .custom-card { 
     height: 400px;
+    .game-btn {
+      position: absolute;
+      color: $game-theme-1c;
+      background-color: $game-theme-1a;
+      border: 2px solid $game-theme-1b;
+      border-radius: .25rem;
+      top: 350px;
+    }
+    .game-btn:hover {
+      background-color: $game-theme-1c;
+      color: $game-theme-1a;
+      font-weight: bold;
+    }
+  
     .bg-card {
     background-color: $game-theme-1e;
       .bg-title {
         background-color: $game-theme-1c;
-      // height: 100%;
       }
     }
     .p-card {
       font-weight: bold;
     }
     #hangmanWord {
-      display: inline-block;
-      z-index: 3;
+      // display: inline-block;
+      // z-index: 3;
+      position: absolute;
+      top: 120px;
       font-weight: bold;
       font-size: 200%;
       letter-spacing: 5px;
@@ -87,19 +85,27 @@ body {
       font-weight: bold;
     }
     #wonMsg {
+      position: absolute;
+      top: 280px;
       color: $game-theme-1a;
       font-weight: bold;
       font-size: 180%;
     }
     #wrongSection {
       display: inline-block;
+      position: absolute;
+      top: 180px;
       font-weight: bold;
     }
     #numWrong {
       display: inline-block;
+      position: absolute;
+      top: 215px;
       font-weight: bold;
     }
     #wrongList {
+      position: absolute;
+      top: 230px;
       font-weight: bold;
       letter-spacing: 3px;
       margin-bottom: 2%;
@@ -109,6 +115,8 @@ body {
       }
     }
     #errorMsg {
+      position: absolute;
+      top: 270px;
       font-weight: bold;
       color: red;
       text-shadow: 1px 1px black;
@@ -121,7 +129,8 @@ body {
       }
     }
     #scores {
-  //    box-sizing: border-box;
+      position: absolute;
+      top: 270px;
       ul {
         margin-left: -30px;
       }

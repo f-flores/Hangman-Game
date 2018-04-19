@@ -21,15 +21,6 @@ body {
     margin-right: 10px; }
   body .game-hdr-bg {
     background-color: #0E5923; }
-  body .game-btn {
-    color: #FFF9EC;
-    background-color: #0E5923;
-    border: 2px solid #8ED358;
-    border-radius: .25rem; }
-  body .game-btn:hover {
-    background-color: #FFF9EC;
-    color: #0E5923;
-    font-weight: bold; }
   body .lead {
     font-family: "Lobster", cursive;
     font-size: 180%;
@@ -40,6 +31,17 @@ body {
     transform: rotateZ(-8deg); }
   body .custom-card {
     height: 400px; }
+    body .custom-card .game-btn {
+      position: absolute;
+      color: #FFF9EC;
+      background-color: #0E5923;
+      border: 2px solid #8ED358;
+      border-radius: .25rem;
+      top: 350px; }
+    body .custom-card .game-btn:hover {
+      background-color: #FFF9EC;
+      color: #0E5923;
+      font-weight: bold; }
     body .custom-card .bg-card {
       background-color: #E9BB4F; }
       body .custom-card .bg-card .bg-title {
@@ -47,24 +49,32 @@ body {
     body .custom-card .p-card {
       font-weight: bold; }
     body .custom-card #hangmanWord {
-      display: inline-block;
-      z-index: 3;
+      position: absolute;
+      top: 120px;
       font-weight: bold;
       font-size: 200%;
       letter-spacing: 5px; }
     body .custom-card #randomFacts {
       font-weight: bold; }
     body .custom-card #wonMsg {
+      position: absolute;
+      top: 280px;
       color: #0E5923;
       font-weight: bold;
       font-size: 180%; }
     body .custom-card #wrongSection {
       display: inline-block;
+      position: absolute;
+      top: 180px;
       font-weight: bold; }
     body .custom-card #numWrong {
       display: inline-block;
+      position: absolute;
+      top: 215px;
       font-weight: bold; }
     body .custom-card #wrongList {
+      position: absolute;
+      top: 230px;
       font-weight: bold;
       letter-spacing: 3px;
       margin-bottom: 2%; }
@@ -72,6 +82,8 @@ body {
         color: red;
         text-shadow: 2px 2px black; }
     body .custom-card #errorMsg {
+      position: absolute;
+      top: 270px;
       font-weight: bold;
       color: red;
       text-shadow: 1px 1px black; }
@@ -80,6 +92,8 @@ body {
       height: 50%;
       float: left; }
     body .custom-card #scores {
+      position: absolute;
+      top: 270px;
       text-decoration: none;
       background-color: #8ED358;
       color: #0E5923;
