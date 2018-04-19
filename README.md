@@ -14,18 +14,22 @@ I was able to check whether or not to display the *"Letter already chosen"* erro
 There are a few helper functions too. initializeGame() resets the hangman object, and empties the game's `<divs>` in `index.html`. printScores() shows the scoreboard's values. A couple of functions, **isValidAlphaChar()** and **isNormalKey()** return true or false depending on the validity of the key press entered and read via the `document.onkeyup` event.
 
 ### Playing the Game
+
 Upon pressing the `Start Game` button, the `startNewGame()` function is triggered.
 The `index.html` file contains the various divs. The hangman word is selected randomly from the 
 word bank. The left box is dynamically populated with facts about baseball and the right box changes with each user's guess. A scoreboard is displayed on the lower part of the screen. 
 If the user wishes to see the console logs and follow the game's logic, he or she can set a global variable DEBUG to "true" in the `game.js`. Also, the default number of maximum guesses is 10; the MAX_GUESSES variable in `game.js` to modify this limit.
 
 ### Getting Started
+
 The user can clone this project into his or her respective repositories. This is a purely front end
 project and all of the project's assets are locally stored. Javascript needs to enabled. The Hangman-Game project makes use of the `Bootstrap 4` library.
 
 ### Browser versions
+
 This game is optimized for Google Chrome. The game does not correctly display on Microsoft Edge or Mozilla Firefox.
 
 ### Comments
+
 This game was added to my github profile's portfolio:
 [f-flores portfolio](https://f-flores.github.io/Responsive-Portfolio/portfolio.html).
