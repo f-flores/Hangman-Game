@@ -73,6 +73,9 @@ body {
       // height: 100%;
       }
     }
+    .p-card {
+      font-weight: bold;
+    }
     #hangmanWord {
       display: inline-block;
       z-index: 3;
@@ -80,63 +83,63 @@ body {
       font-size: 200%;
       letter-spacing: 5px;
     }
-  }
-  .p-card {
-    font-weight: bold;
-  }
-  #randomFacts {
-    font-weight: bold;
+    #randomFacts {
+      font-weight: bold;
+    }
+    #wonMsg {
+      color: $game-theme-1a;
+      font-weight: bold;
+      font-size: 180%;
+    }
+    #wrongSection {
+      display: inline-block;
+      font-weight: bold;
+    }
+    #numWrong {
+      display: inline-block;
+      font-weight: bold;
+    }
+    #wrongList {
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 2%;
+      p {
+        color: red;
+        text-shadow: 2px 2px black;
+      }
+    }
+    #errorMsg {
+      font-weight: bold;
+      color: red;
+      text-shadow: 1px 1px black;
+    }
+    #randomImg {
+      img {
+        width: 50%;
+        height: 50%;
+        float: left;
+      }
+    }
+    #scores {
+  //    box-sizing: border-box;
+      ul {
+        margin-left: -30px;
+      }
+      li {
+        list-style-type: none;
+        display: inline-block;
+        margin-right: 8px;
+      }
+      text-decoration: none;
+      background-color: $game-theme-1b;
+      color: $game-theme-1a;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
   }
 
-  #wonMsg {
-    color: $game-theme-1a;
-    font-weight: bold;
-    font-size: 180%;
-  }
-  #wrongSection {
-    display: inline-block;
-    font-weight: bold;
-  }
-  #numWrong {
-    display: inline-block;
-    font-weight: bold;
-  }
-  #wrongList {
-    font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 2%;
-    p {
-      color: red;
-      text-shadow: 2px 2px black;
-    }
-  }
-  #errorMsg {
-    font-weight: bold;
-    color: red;
-    text-shadow: 1px 1px black;
-  }
-  #randomImg {
-    img {
-      width: 50%;
-      height: 50%;
-      float: left;
-    }
-  }
-  #scores {
-//    box-sizing: border-box;
-    ul {
-      margin-left: -30px;
-    }
-    li {
-      list-style-type: none;
-      display: inline-block;
-      margin-right: 8px;
-    }
-    text-decoration: none;
-    background-color: $game-theme-1b;
-    color: $game-theme-1a;
-    font-weight: bold;
-    margin-bottom: 4px;
-  }
+
+
+
 
 }

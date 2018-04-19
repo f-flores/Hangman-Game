@@ -44,50 +44,50 @@ body {
       background-color: #E9BB4F; }
       body .custom-card .bg-card .bg-title {
         background-color: #FFF9EC; }
+    body .custom-card .p-card {
+      font-weight: bold; }
     body .custom-card #hangmanWord {
       display: inline-block;
       z-index: 3;
       font-weight: bold;
       font-size: 200%;
       letter-spacing: 5px; }
-  body .p-card {
-    font-weight: bold; }
-  body #randomFacts {
-    font-weight: bold; }
-  body #wonMsg {
-    color: #0E5923;
-    font-weight: bold;
-    font-size: 180%; }
-  body #wrongSection {
-    display: inline-block;
-    font-weight: bold; }
-  body #numWrong {
-    display: inline-block;
-    font-weight: bold; }
-  body #wrongList {
-    font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 2%; }
-    body #wrongList p {
-      color: red;
-      text-shadow: 2px 2px black; }
-  body #errorMsg {
-    font-weight: bold;
-    color: red;
-    text-shadow: 1px 1px black; }
-  body #randomImg img {
-    width: 50%;
-    height: 50%;
-    float: left; }
-  body #scores {
-    text-decoration: none;
-    background-color: #8ED358;
-    color: #0E5923;
-    font-weight: bold;
-    margin-bottom: 4px; }
-    body #scores ul {
-      margin-left: -30px; }
-    body #scores li {
-      list-style-type: none;
+    body .custom-card #randomFacts {
+      font-weight: bold; }
+    body .custom-card #wonMsg {
+      color: #0E5923;
+      font-weight: bold;
+      font-size: 180%; }
+    body .custom-card #wrongSection {
       display: inline-block;
-      margin-right: 8px; }
+      font-weight: bold; }
+    body .custom-card #numWrong {
+      display: inline-block;
+      font-weight: bold; }
+    body .custom-card #wrongList {
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 2%; }
+      body .custom-card #wrongList p {
+        color: red;
+        text-shadow: 2px 2px black; }
+    body .custom-card #errorMsg {
+      font-weight: bold;
+      color: red;
+      text-shadow: 1px 1px black; }
+    body .custom-card #randomImg img {
+      width: 50%;
+      height: 50%;
+      float: left; }
+    body .custom-card #scores {
+      text-decoration: none;
+      background-color: #8ED358;
+      color: #0E5923;
+      font-weight: bold;
+      margin-bottom: 4px; }
+      body .custom-card #scores ul {
+        margin-left: -30px; }
+      body .custom-card #scores li {
+        list-style-type: none;
+        display: inline-block;
+        margin-right: 8px; }
