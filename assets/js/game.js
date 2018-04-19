@@ -240,7 +240,7 @@ function startNewGame() {
   document.onkeyup = function(event) {
     document.querySelector("#errorMsg").innerHTML = ""; // reset error message
     // check for valid hangman characters: a..z
-    if ( validAlphaChar(event.key) && isNormalKey(event.key) ) {
+    if ( validAlphaChar(event.key) /* && isNormalKey(event.key) */ ) {
       if (DEBUG) { console.log( " *Valid* and *Normal* key. Event Key: " + event.key);}
       // Determines which key was pressed. Convert to lower case
       hangman.currentGuess = event.key.toLowerCase();
