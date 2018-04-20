@@ -208,7 +208,7 @@ function isNormalKey(k) {
                      "Enter","Fn","PageDown","Home","End","Insert","PrntScr","Delete","Escape",
                      "ArrowRight","ArrowLeft","ArrowDown","ArrowUp"];
   for (var i = 0; i < specialKeys.length; i++) {
-  //  if (event.key === specialKeys[i]) {
+  //  if (event.key === specialKeys[i]) { <--- Causes bug on firefox and edge browser
     if (k === specialKeys[i]) {
       return false;
     }
