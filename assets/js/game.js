@@ -248,8 +248,8 @@ function startNewGame() {
       if (hangman.newGame === true) {
         hangman.htmlWrongSection = "<h5 class=\"custom-h5\">Guesses Remaining:&nbsp;&nbsp;</h5>"
         document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection +
-        "<p><span style=\"color:blue\">" + 
-        hangman.numGuessesLeft.toString() + "</span></p>";
+        "<span style=\"color:blue\">" + 
+        hangman.numGuessesLeft.toString() + "</span>";
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
@@ -278,7 +278,9 @@ function startNewGame() {
           hangman.numGuessesLeft--;
           if (DEBUG) {console.log("Wrong Guesses: " + hangman.numGuessesLeft);}
           document.querySelector("#wrongList").innerHTML += hangman.currentGuess;
-          document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection + hangman.numGuessesLeft.toString();
+          document.querySelector("#wrongSection").innerHTML = hangman.htmlWrongSection +
+          "<span style=\"color:blue\">" + 
+          hangman.numGuessesLeft.toString() + "</span>";
           if (hangman.numGuessesLeft === 0) {
             if (DEBUG) {console.log("You lose!");}
             scoreBoard.losses++;
