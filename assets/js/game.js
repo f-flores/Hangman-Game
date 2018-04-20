@@ -248,8 +248,8 @@ function startNewGame() {
       if (hangman.newGame === true) {
         hangman.htmlWrongSection = "<h5 class=\"custom-h5\">Guesses Remaining:&nbsp;&nbsp;</h5>"
         document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection +
-        "<span style=\"color:blue\">" + 
-        hangman.numGuessesLeft.toString() + "</span>";
+        "<p><span style=\"color:blue\">" + 
+        hangman.numGuessesLeft.toString() + "</span></p>";
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
