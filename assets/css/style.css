@@ -15,10 +15,10 @@ body {
       height: 25%; }
   body h1 {
     font-family: "Rammetto One", cursive; }
-  body h5 {
-    height: 120%;
-    display: inline-block;
-    margin-right: 10px; }
+  body .custom-h5 {
+    /* height: 120%; */
+    font-size: 120%;
+    display: inline-block; }
   body .game-hdr-bg {
     background-color: #0E5923; }
   body .lead {
@@ -37,7 +37,8 @@ body {
       background-color: #0E5923;
       border: 2px solid #8ED358;
       border-radius: .25rem;
-      top: 350px; }
+      top: 350px;
+      left: 30px; }
     body .custom-card .game-btn:hover {
       background-color: #FFF9EC;
       color: #0E5923;
@@ -58,7 +59,7 @@ body {
       font-weight: bold; }
     body .custom-card #wonMsg {
       position: absolute;
-      top: 280px;
+      top: 235px;
       color: #0E5923;
       font-weight: bold;
       font-size: 180%; }
@@ -74,7 +75,7 @@ body {
       font-weight: bold; }
     body .custom-card #wrongList {
       position: absolute;
-      top: 230px;
+      top: 210px;
       font-weight: bold;
       letter-spacing: 3px;
       margin-bottom: 2%; }
@@ -83,7 +84,7 @@ body {
         text-shadow: 2px 2px black; }
     body .custom-card #errorMsg {
       position: absolute;
-      top: 270px;
+      top: 240px;
       font-weight: bold;
       color: red;
       text-shadow: 1px 1px black; }

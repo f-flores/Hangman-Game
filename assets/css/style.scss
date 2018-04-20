@@ -32,10 +32,10 @@ body {
   h1 {
     font-family: $game-hdr-font;
   }
-  h5 {
-    height: 120%;
+  .custom-h5 {
+    /* height: 120%; */
+    font-size: 120%;
     display: inline-block;
-    margin-right: 10px;
   }
   .game-hdr-bg {
     background-color: $game-theme-1a;
@@ -56,6 +56,7 @@ body {
       border: 2px solid $game-theme-1b;
       border-radius: .25rem;
       top: 350px;
+      left: 30px;
     }
     .game-btn:hover {
       background-color: $game-theme-1c;
@@ -86,7 +87,7 @@ body {
     }
     #wonMsg {
       position: absolute;
-      top: 280px;
+      top: 235px;
       color: $game-theme-1a;
       font-weight: bold;
       font-size: 180%;
@@ -105,7 +106,7 @@ body {
     }
     #wrongList {
       position: absolute;
-      top: 230px;
+      top: 210px;
       font-weight: bold;
       letter-spacing: 3px;
       margin-bottom: 2%;
@@ -116,7 +117,7 @@ body {
     }
     #errorMsg {
       position: absolute;
-      top: 270px;
+      top: 240px;
       font-weight: bold;
       color: red;
       text-shadow: 1px 1px black;
@@ -146,9 +147,5 @@ body {
       margin-bottom: 4px;
     }
   }
-
-
-
-
 
 }

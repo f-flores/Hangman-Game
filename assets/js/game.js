@@ -65,7 +65,7 @@ var hangman = {
   // hangman Object Methods
   //
   getStartHtml: function() {
-    return "<h5> Hangman game has begun. Start Guessing by pressing keys 'a' to 'z'.</h5>";
+    return "<h6> Hangman game has begun. Start Guessing by pressing keys 'a' to 'z'.</h6>";
   },
   getRandomWord: function() {
     var randomIndex = Math.floor((Math.random() * this.wordBank.length))
@@ -246,8 +246,10 @@ function startNewGame() {
       // Determines which key was pressed. Convert to lower case
       hangman.currentGuess = event.key.toLowerCase();
       if (hangman.newGame === true) {
-        hangman.htmlWrongSection = "<h5>Guesses Remaining:</h5>"
-        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection +             hangman.numGuessesLeft.toString();
+        hangman.htmlWrongSection = "<h5 class=\"custom-h5\">Guesses Remaining:&nbsp;&nbsp;</h5>"
+        document.querySelector("#wrongSection").innerHTML += hangman.htmlWrongSection +
+        "<span style=\"color:blue\">" + 
+        hangman.numGuessesLeft.toString() + "</span>";
         hangman.newGame = false;
         hangman.wrongGuesses = 0;
       }
